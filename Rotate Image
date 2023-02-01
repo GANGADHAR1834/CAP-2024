@@ -1,0 +1,21 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        int r = matrix.length;
+        int c = matrix[0].length;
+        ArrayList<ArrayList<Integer>> b =new ArrayList<>();
+        for(int i = 0; i < r;i++){
+            ArrayList<Integer> a = new ArrayList<>();
+            for(int j = 0 ; j < c ; j++){
+                int k = (matrix[j][i]);
+                a.add(k);
+            }
+            Collections.reverse(a);
+            b.add(a);
+        }
+        for(int i =0 ;i<r;i++){
+            for(int j = 0 ; j<c ; j++){
+                matrix[i][j]=b.get(i).get(j);
+            }
+        }
+    }
+}
