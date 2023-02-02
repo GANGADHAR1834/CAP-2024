@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    HashMap<Integer,Integer> k = new HashMap<>();
+    int max=1;
+    void inorder(TreeNode node)
+    {
+        if (node == null)
+            return;
+        inorder(node.left);
+        if(k.containsKey(node.val)){
+            k.put(node.val,k.get(node.val)+1);
+            if(k.get(node.val)+1 > max){
+                max=k.get(node.val);
+            }
+        }
+        else{
+            k.put(node.val,1);
+        }
+        inorder(node.right);
+    }
+    public int[] findMode(TreeNode root) {
+        inorder(root);
+        System.out.print(max);
+        ArrayList<Integer> o = new ArrayList<>();
+        for(Map.Entry<Integer,Integer> i :k.entrySet()){
+            int r = i.getValue();
+            int w = i.getKey();
+            if(r==max){
+                o.add(w);
+            }
+        }
+        int [] a = new int[o.size()];
+        for(int i = 0 ; i<o.size() ; i++){
+            a[i]=(o.get(i));
+            System.out.print(a[i]);
+        }
+        return a;
+    }
+}
