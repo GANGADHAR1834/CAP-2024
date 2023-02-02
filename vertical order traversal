@@ -1,0 +1,65 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ class Nnode{
+    TreeNode n;
+    int v;
+    int l;
+    public Nnode(TreeNode n , int v , int l){
+        this.n = n;
+        this.v = v;
+        this.l = l;
+    }
+}
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        TreeMap<Integer,TreeMap<Integer,ArrayList<Integer>>> map1 = new TreeMap<>();
+        Queue<Nnode> q = new LinkedList<>();
+        q.offer(new Nnode(root,0,0));
+        while(q.size()!=0){
+            Nnode k = q.poll();
+            TreeNode a = k.n;
+            int vt = k.v;
+            int lt = k.l;
+            
+            TreeMap<Integer,ArrayList<Integer>> map2 = map1.getOrDefault(vt,new TreeMap<>());
+            ArrayList<Integer> arr = map2.getOrDefault(lt,new ArrayList<>());
+            arr.add(a.val);
+            map2.put(lt,arr);
+            map1.put(vt,map2);
+            
+            if(a.left != null){
+                q.offer(new Nnode(a.left,vt-1,lt+1));
+            }
+            if(a.right != null){
+                q.offer(new Nnode(a.right,vt+1,lt+1));
+            }
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        for(Map.Entry<Integer,TreeMap<Integer,ArrayList<Integer>>> entry1:map1.entrySet()){
+            List<Integer> arr2 = new ArrayList<>();
+            TreeMap<Integer,ArrayList<Integer>> map2 = entry1.getValue();
+            for(Map.Entry<Integer,ArrayList<Integer>> entry2 :map2.entrySet()){
+                ArrayList<Integer> arr1 = entry2.getValue();
+                Collections.sort(arr1);
+                for(int i :arr1){
+                    arr2.add(i);
+                }
+            }
+            res.add(arr2);
+        }
+        return res;
+    }
+}
