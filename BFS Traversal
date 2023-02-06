@@ -1,0 +1,23 @@
+class Solution {
+    public ArrayList<Integer> bfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] b = new int[V];
+        ArrayList<Integer> k = new ArrayList<>();
+        Queue<Integer> q = new LinkedList<>();
+        
+        b[0]=1;
+        q.add(0);
+        
+        while(q.size() != 0 ){
+            int l = q.poll();
+            k.add(l);
+            
+            for(int i : adj.get(l)){
+                if(b[i]==0){
+                    b[i]=1;
+                    q.add(i);
+                }
+            }
+        }
+        return k;
+    }
+}
