@@ -1,0 +1,25 @@
+class Solution {
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        int[] a = new int[rooms.size()];
+        a[0]=1;
+
+        Stack<Integer> s = new Stack<>();
+        s.push(0);
+
+        while(s.size()!=0){
+            int n = s.pop();
+            for(int i : rooms.get(n)){
+                if(a[i]!=1){
+                    a[i]=1;
+                    s.push(i);
+                }
+            }
+        }
+        for(int i = 0 ; i<a.length ; i++){
+            if(a[i] != 1 ){
+                return false;
+            }
+        }
+        return true;
+    }
+}
