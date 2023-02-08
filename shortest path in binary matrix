@@ -1,0 +1,43 @@
+class Solution {
+    class pair{
+        int rp;
+        int cp;
+        int costp;
+        public pair(int rp,int cp ,int costp){
+            this.rp= rp;
+            this.cp=cp;
+            this.costp=costp;
+        }
+    }
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        int r = grid.length;
+        int c = grid[0].length;
+        if(grid[0][0]==1){
+            return -1;
+        }
+        int[] dr = {0,1,-1,0,1,1,-1,-1};
+        int[] dc = {1,0,0,-1,1,-1,1,-1};
+        Queue<pair> s = new LinkedList<>();
+        s.offer(new pair(0,0,1));
+        grid[0][0]=1;
+        while(s.size()!=0){
+            int n = s.size();
+            pair k = s.poll();
+            int ri = k.rp;
+            int ci = k.cp;
+            int cost = k.costp;
+            if(ri==r-1 && ci == c-1){
+                return cost;
+            }
+            for(int i = 0 ; i<dr.length ; i++){
+                int x = ri+dr[i];
+                int y = ci+dc[i];
+                if(x>=0 && x<r && y>=0 && y<c && grid[x][y]==0){
+                    s.offer(new pair(x,y,cost+1));
+                    grid[x][y]=1;
+                }
+                }
+            }
+        return -1;
+    }
+}
